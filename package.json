@@ -1,0 +1,10 @@
+{
+  "name": "data-portal-google-scripts",
+  "version": "1.0.0",
+  "description": "A selection of Google scripts using the Data Portal",
+  "author": "data@nhm.ac.uk",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@google/clasp": "^2.4.0"
+  }
+}
