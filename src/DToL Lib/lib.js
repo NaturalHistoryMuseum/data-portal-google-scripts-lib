@@ -9,6 +9,7 @@ const FROZEN_FILTERS = {
         PortalLib.stringEquals('preservative', 'Liquid Nitrogen')
     ]
 }
+const UK_FILTER = PortalLib.stringEquals('country', 'United Kingdom');
 const MARK_PROPERTY_NAME = 'mark';
 
 
@@ -36,7 +37,7 @@ function getRankRows(sheet, firstRow, lastRow, speciesColumn, genusColumn, highe
         getValuesInColumn(sheet, genusColumn, firstRow, lastRow)
     ];
     if (higherTaxa) {
-        higherTaxa.forEach(([column, rank]) => {
+        higherTaxa.forEach((rank, column) => {
             ranks.push(rank);
             rankColumns.push(getValuesInColumn(sheet, column, firstRow, lastRow));
         });
@@ -56,7 +57,8 @@ function updateCounts({
                           limit = 100,
                           ethanolColumn = undefined,
                           frozenColumn = undefined,
-                          boldColumn = undefined
+                          boldColumn = undefined,
+                          ukOnly = false
                       }) {
     const sheet = SpreadsheetApp.getActive().getSheetByName(targetSheet);
     const firstRow = getMark();
@@ -69,27 +71,30 @@ function updateCounts({
 
     let counts = new Map();
     rankRows.forEach(row => {
-        let taxonFilter = [];
+        let filter = [];
         if (row[0] && row[1]) {
-            taxonFilter.push(PortalLib.stringEquals('specificEpithet', row[0]));
-            taxonFilter.push(PortalLib.stringEquals('genus', row[1]));
+            filter.push(PortalLib.stringEquals('specificEpithet', row[0]));
+            filter.push(PortalLib.stringEquals('genus', row[1]));
         } else {
             let value = row.slice(1).find(element => !!element);
-            taxonFilter.push(PortalLib.stringEquals(ranks[row.indexOf(value)], value));
+            filter.push(PortalLib.stringEquals(ranks[row.indexOf(value)], value));
+        }
+        if (filter && ukOnly) {
+            filter.push(UK_FILTER);
         }
 
         if (ethanolColumn) {
-            const count = !taxonFilter ? 0 : PortalLib.count({filters: {'and': taxonFilter.concat([ETHANOL_FILTER])}});
+            const count = !filter ? 0 : PortalLib.count({filters: {'and': filter.concat([ETHANOL_FILTER])}});
             setDefault(counts, ethanolColumn, []).push([count]);
         }
 
         if (frozenColumn) {
-            const count = !taxonFilter ? 0 : PortalLib.count({filters: {'and': taxonFilter.concat(FROZEN_FILTERS)}});
+            const count = !filter ? 0 : PortalLib.count({filters: {'and': filter.concat(FROZEN_FILTERS)}});
             setDefault(counts, frozenColumn, []).push([count]);
         }
 
         if (boldColumn) {
-            setDefault(counts, boldColumn, []).push([getBoldCount(row[0], row[1])]);
+            setDefault(counts, boldColumn, []).push([getBoldCount(row[0], row[1], ukOnly)]);
         }
     });
 
@@ -113,9 +118,12 @@ function setDefault(map, key, defaultValue) {
     return map.get(key);
 }
 
-function getBoldCount(species, genus) {
-    const url = `https://www.boldsystems.org/index.php/API_Public/stats?format=json&taxon=${genus} ${species}`;
+function getBoldCount(species, genus, ukOnly) {
+    let url = `https://www.boldsystems.org/index.php/API_Public/stats?format=json&taxon=${genus} ${species}`;
 
+    if (ukOnly) {
+        url += `&geo=United Kingdom`;
+    }
     const options = {
         'method': 'get',
         'muteHttpExceptions': true
