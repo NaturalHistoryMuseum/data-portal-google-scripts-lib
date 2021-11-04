@@ -5,6 +5,6 @@
   "author": "data@nhm.ac.uk",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@google/clasp": "^2.4.0"
+    "@google/clasp": "^2.4.1"
   }
 }
