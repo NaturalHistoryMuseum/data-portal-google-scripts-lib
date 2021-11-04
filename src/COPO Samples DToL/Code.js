@@ -14,7 +14,7 @@ function updateDTOLSampleData() {
   let data = [];
 
   // retrieve the COPO IDs for all the DToL samples
-  const response = UrlFetchApp.fetch("https://copo-project.org/api/sample/dtol");
+  const response = UrlFetchApp.fetch("https://copo-project.org/api/sample/dtol/");
   // parse the response data as JSON
   const responseData = JSON.parse(response.getContentText());
   // grab all the COPO IDs from the array of objects returned by the API
@@ -28,7 +28,7 @@ function updateDTOLSampleData() {
     // extract the chunk of COPO IDs we're going to work on next
     const chunk = copoIds.slice(i, i + chunkSize);
     // get the sample data associated with these COPO IDs
-    const sampleResponse = UrlFetchApp.fetch(`https://copo-project.org/api/sample/copo_id/${chunk.join()}`);
+    const sampleResponse = UrlFetchApp.fetch(`https://copo-project.org/api/sample/copo_id/${chunk.join()}/`);
     // parse the JSON response
     const sampleResponseData = JSON.parse(sampleResponse.getContentText());
 
