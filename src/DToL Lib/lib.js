@@ -114,7 +114,7 @@ function setDefault(map, key, defaultValue) {
 }
 
 function getBoldCount(species, genus) {
-    const url = `https://www.boldsystems.org/index.php/API_Public/stats?format=json&container=FBUK&taxon=${genus} ${species}`;
+    const url = `https://www.boldsystems.org/index.php/API_Public/stats?format=json&taxon=${genus} ${species}`;
 
     const options = {
         'method': 'get',
