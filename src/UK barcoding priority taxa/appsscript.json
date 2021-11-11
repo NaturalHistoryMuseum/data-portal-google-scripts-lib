@@ -3,7 +3,7 @@
   "dependencies": {
     "libraries": [
       {
-        "userSymbol": "PortalLib",
+        "userSymbol": "PortalLibLoader",
         "version": "0",
         "libraryId": "1T_JhNQCf8x4PFQyV6RiYmFCTZZyRp1SMtRxrhEoeJNO-Gfpmg6LKpuWW",
         "developmentMode": true

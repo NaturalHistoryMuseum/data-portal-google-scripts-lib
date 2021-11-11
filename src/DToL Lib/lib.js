@@ -1,3 +1,5 @@
+const PortalLib = PortalLibLoader.load();
+
 // a list of preservative filters
 const ETHANOL_FILTER = PortalLib.stringEquals('preservative', 'Ethanol')
 const FROZEN_FILTERS = {
