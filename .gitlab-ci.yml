@@ -1,0 +1,14 @@
+default:
+  tags:
+  - informatics
+
+tests:
+  stage: test
+  image: node:latest
+  cache:
+    paths:
+      - node_modules/
+  before_script:
+    - npm install
+  script:
+    - npm test

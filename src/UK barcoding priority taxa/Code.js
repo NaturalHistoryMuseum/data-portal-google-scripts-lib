@@ -1,3 +1,5 @@
+const PortalLib = PortalLibLoader.load();
+
 function getNHMCount(genus, species, mcfOnly) {
     let and = [
         PortalLib.stringEquals('genus', genus),
