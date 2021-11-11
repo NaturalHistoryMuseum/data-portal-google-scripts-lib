@@ -99,3 +99,16 @@ suite('#search()', function () {
         )
     });
 });
+
+
+suite('#stringEquals()', function () {
+    test('should return a valid filter block', function () {
+        const block = PortalLib.stringEquals('testField', 'testValue');
+        assert.deepStrictEqual(block, {
+            'string_equals': {
+                'fields': ['testField'],
+                'value': 'testValue'
+            }
+        })
+    });
+});
