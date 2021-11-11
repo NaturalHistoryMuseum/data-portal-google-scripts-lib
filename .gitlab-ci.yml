@@ -11,9 +11,4 @@ tests:
   before_script:
     - npm install
   script:
-    - mocha --reporter mocha-junit-reporter --reporter-options mochaFile=junit.xml
-  artifacts:
-    when: always
-    reports:
-      junit:
-        - junit.xml
+    - npm test
