@@ -3,6 +3,21 @@
 This repository contains a Google Scripts based around accessing the Data Portal API.
 The code in this repository should be a mirror of the scripts in Google Scripts.
 
+## Usage
+These scripts are in use on the following sheets:
+
+- [NHM_DToL_Invertebrate (non-insect)_Species](https://docs.google.com/spreadsheets/d/15CZrfDDsSRwLFAb9OQ134183a-vCuAFsw6O_YAucxQ8/edit?usp=sharing)
+- [NHM_DToL_INSECTA_Species](https://docs.google.com/spreadsheets/d/1FZoRtZZEhbV3SwXo-UaDheqExGgegCbgey_nFnbYVaI/edit?usp=sharing)
+- [NHM_DToL_Chordata_Species](https://docs.google.com/spreadsheets/d/1IAMTxGx1WCyinnP71T7OTZf0-YEGQxUa9-u2b32vOI4/edit?usp=sharing)
+- [UK barcoding priority taxa](https://docs.google.com/spreadsheets/d/1Ntrfh0k8te8QQ4ROEuOs_DSSa3e5vPGMYU3TUFsGkao/edit?usp=sharing)
+- [COPO Samples DToL](https://docs.google.com/spreadsheets/d/1erZxMnSvPas2T9bnUnj7oOMd3PUMeyf95uWeHIdC7Pw/edit?usp=sharing)
+- [FreshBase - non-Arthropod Invertebrates](https://docs.google.com/spreadsheets/d/1abc6Qk6XFqTYSm9pXuaNYvFF0bNnYlT9IKR5NW3czDE/edit?usp=sharing)
+- [FreshBase - Arthropods](https://docs.google.com/spreadsheets/d/1rshpvGr1HWlfeFR5nsHXshpBAOdiDFnIFnUK0b9dpcM/edit?usp=sharing)
+- [FreshBase - RIVPACS](https://docs.google.com/spreadsheets/d/1g2c2m5KLbAtaplCNHlpoyOplP5qu3PvWaz73mM0APxQ/edit?usp=sharing)
+
+Each of the above sheets has a directory under the `src/` directory.
+Some of them use the two libraries currently held in this repository which are listed next.
+
 ## Libraries
 
 ### src/Portal Lib
