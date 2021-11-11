@@ -94,7 +94,7 @@ function load() {
     function stringEquals(field, value) {
         return {
             string_equals: {
-                // TODO: mulitple fields
+                // TODO: multiple fields
                 fields: [field],
                 value: value
             }
