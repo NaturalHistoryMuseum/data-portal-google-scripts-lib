@@ -35,7 +35,7 @@ function main() {
         targetSheet: targetSheet,
         genusColumn: genusColumn,
         speciesColumn: speciesColumn,
-        filters: [DToLLib.UK_FILTER].concat(DToLLib.ETHANOL_FILTER),
+        filters: [DToLLib.UK_FILTER, DToLLib.ETHANOL_FILTER],
         targetColumn: 'M'
     });
 
@@ -44,7 +44,7 @@ function main() {
         targetSheet: targetSheet,
         genusColumn: genusColumn,
         speciesColumn: speciesColumn,
-        filters: [DToLLib.UK_FILTER].concat(DToLLib.FROZEN_FILTER),
+        filters: [DToLLib.UK_FILTER, DToLLib.FROZEN_FILTER],
         targetColumn: 'P'
     });
 

@@ -9,7 +9,7 @@ function main() {
         targetSheet: targetSheet,
         genusColumn: genusColumn,
         speciesColumn: speciesColumn,
-        filters: [DToLLib.DTOL_FILTER].concat(DToLLib.ETHANOL_FILTER),
+        filters: [DToLLib.DTOL_FILTER, DToLLib.ETHANOL_FILTER],
         targetColumn: 'L'
     });
 
@@ -18,7 +18,7 @@ function main() {
         targetSheet: targetSheet,
         genusColumn: genusColumn,
         speciesColumn: speciesColumn,
-        filters: [DToLLib.DTOL_FILTER].concat(DToLLib.FROZEN_FILTER),
+        filters: [DToLLib.DTOL_FILTER, DToLLib.FROZEN_FILTER],
         targetColumn: 'O'
     });
 }
