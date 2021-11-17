@@ -85,7 +85,7 @@ function load() {
     }
 
     function* searchAll({
-                            resourceIds = [PortalLib.SPECIMENS],
+                            resourceIds = [SPECIMENS],
                             searchTerm = undefined,
                             filters = undefined,
                             chunkSize = 500,
