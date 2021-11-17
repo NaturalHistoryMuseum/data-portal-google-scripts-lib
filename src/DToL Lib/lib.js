@@ -69,7 +69,10 @@ function load() {
             }
         }
 
-        let counts = Array.from(speciesCounts.values()).map(count => [count]);
+        let counts = genusValues.map((genus, index) => {
+            const specificEpithet = specificEpithetValues[index];
+            return [speciesCounts.get(`${genus} ${specificEpithet}`.toLowerCase())];
+        })
         sheet.getRange(`${targetColumn}${start}:${targetColumn}${end}`).setValues(counts);
 
         return speciesCounts;
