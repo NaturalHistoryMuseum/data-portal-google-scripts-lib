@@ -84,6 +84,29 @@ function load() {
         return search({resourceIds, searchTerm, filters, size: 0, after: undefined, version}).total;
     }
 
+    function* searchAll({
+                        resourceIds = [SPECIMENS],
+                        searchTerm = undefined,
+                        filters = undefined,
+                        chunkSize = 1000,
+                        version = Date.now()
+                    }) {
+        let after = undefined;
+        while (true) {
+            const result = search({
+                resourceIds,
+                searchTerm,
+                filters,
+                chunkSize,
+                after,
+                version});
+            if (!result.records) {
+                break;
+            }
+            yield* result.records;
+            after = result.after;
+        }
+    }
 
     /**
      * Convenience function which creates a string_equals block for inclusion in searches/counts filter blocks.
@@ -101,10 +124,27 @@ function load() {
         }
     }
 
+    /**
+     * Convenience function which creates a string_contains block for inclusion in searches/counts filter blocks.
+     * @param field the field to search over
+     * @param value the value to match to the field's value
+     * @returns {{string_contains: {fields: *[], value}}}
+     */
+    function stringContains(field, value) {
+        return {
+            string_contains: {
+                // TODO: multiple fields
+                fields: [field],
+                value: value
+            }
+        }
+    }
+
     return {
         'search': search,
         'count': count,
         'stringEquals': stringEquals,
+        'stringContains': stringContains,
         'SearchError': SearchError,
         'SPECIMENS': SPECIMENS,
         'INDEX_LOTS': INDEX_LOTS,
