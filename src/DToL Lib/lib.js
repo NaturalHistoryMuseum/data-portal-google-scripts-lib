@@ -1,14 +1,32 @@
 const PortalLib = PortalLibLoader.load();
 
 // a list of preservative filters
-const ETHANOL_FILTER = PortalLib.stringEquals('preservative', 'Ethanol')
-const FROZEN_FILTERS = {
+const ETHANOL_FILTER = {
     'or': [
-        PortalLib.stringEquals('preservative', 'Dry frozen (-200°C)'),
-        PortalLib.stringEquals('preservative', 'Dry frozen (-80°C)'),
-        PortalLib.stringEquals('preservative', 'Dry Ice'),
-        PortalLib.stringEquals('preservative', 'Frozen -70'),
-        PortalLib.stringEquals('preservative', 'Liquid Nitrogen')
+        PortalLib.stringEquals('preservative', '100% ethanol'),
+        PortalLib.stringEquals('preservative', 'ethanol'),
+        PortalLib.stringEquals('preservative', '80% ethanol'),
+        PortalLib.stringEquals('preservative', '70% ethanol'),
+        PortalLib.stringEquals('preservative', '75% ethanol'),
+        PortalLib.stringEquals('preservative', '96% ethanol'),
+        PortalLib.stringEquals('preservative', 'ethanol 70% (for dna work)'),
+        PortalLib.stringEquals('preservative', 'ethanol 100% (for dna work)'),
+        PortalLib.stringEquals('preservative', 'ethanol 70%'),
+        PortalLib.stringEquals('preservative', 'ethanol 80%'),
+        PortalLib.stringEquals('preservative', '70%ethanol'),
+        PortalLib.stringEquals('preservative', '90% ethanol'),
+        PortalLib.stringEquals('preservative', '99% ethanol'),
+        PortalLib.stringEquals('preservative', '95% ethanol'),
+        PortalLib.stringEquals('preservative', 'spirit (ethanol)'),
+    ]
+}
+const FROZEN_FILTER = {
+    'or': [
+        PortalLib.stringEquals('preservative', 'dry frozen (-200°c)'),
+        PortalLib.stringEquals('preservative', 'dry frozen (-80°c)'),
+        PortalLib.stringEquals('preservative', 'dry ice'),
+        PortalLib.stringEquals('preservative', 'liquid nitrogen'),
+        PortalLib.stringEquals('preservative', 'frozen'),
     ]
 }
 const UK_FILTER = PortalLib.stringEquals('country', 'United Kingdom');
@@ -86,12 +104,12 @@ function updateCounts({
         }
 
         if (ethanolColumn) {
-            const count = !filter ? 0 : PortalLib.count({filters: {'and': filter.concat([ETHANOL_FILTER])}});
+            const count = !filter ? 0 : PortalLib.count({filters: {'and': filter.concat(ETHANOL_FILTER)}});
             setDefault(counts, ethanolColumn, []).push([count]);
         }
 
         if (frozenColumn) {
-            const count = !filter ? 0 : PortalLib.count({filters: {'and': filter.concat(FROZEN_FILTERS)}});
+            const count = !filter ? 0 : PortalLib.count({filters: {'and': filter.concat(FROZEN_FILTER)}});
             setDefault(counts, frozenColumn, []).push([count]);
         }
 
