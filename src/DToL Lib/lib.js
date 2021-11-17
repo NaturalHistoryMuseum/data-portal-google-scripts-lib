@@ -30,6 +30,7 @@ const FROZEN_FILTER = {
     ]
 }
 const UK_FILTER = PortalLib.stringEquals('country', 'United Kingdom');
+const DTOL_FILTER = PortalLib.stringEquals('project', 'Darwin Tree of Life')
 const MARK_PROPERTY_NAME = 'mark';
 
 
@@ -91,7 +92,7 @@ function updateCounts({
 
     let counts = new Map();
     rankRows.forEach(row => {
-        let filter = [];
+        let filter = [DTOL_FILTER];
         if (row[0] && row[1]) {
             filter.push(PortalLib.stringEquals('specificEpithet', row[0]));
             filter.push(PortalLib.stringEquals('genus', row[1]));
