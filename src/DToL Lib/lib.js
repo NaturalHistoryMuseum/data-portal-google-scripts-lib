@@ -70,6 +70,48 @@ function getRankRows(sheet, firstRow, lastRow, speciesColumn, genusColumn, highe
     return [ranks, rankRows]
 }
 
+function updateAllCounts({
+                             targetSheet,
+                             genusColumn,
+                             speciesColumn,
+                             ethanolColumn = undefined,
+                             frozenColumn = undefined,
+                         }) {
+    const sheet = SpreadsheetApp.getActive().getSheetByName(targetSheet);
+    const lastRow = sheet.getLastRow();
+    const genusValues = getValuesInColumn(sheet, genusColumn, 1, lastRow);
+    const specificEpithetValues = getValuesInColumn(sheet, speciesColumn, 1, lastRow);
+    let speciesCounts = new Map();
+    genusValues.forEach((genus, index) => {
+        const specificEpithet = specificEpithetValues[index];
+        speciesCounts.set(`${genus} ${specificEpithet}`, {'ethanol': 0, 'frozen': 0});
+    });
+
+    const preservatives = [['ethanol', ETHANOL_FILTER], ['frozen', FROZEN_FILTER]];
+    preservatives.forEach((preservative, filter) => {
+        for (const record of PortalLib.searchAll({filters: {'and': DTOL_FILTER.concat(filter)}})) {
+            if (!!record.data.genus && !!record.data.specificEpithet) {
+                const species = `${record.data.genus} ${record.data.specificEpithet}`;
+                let count = speciesCounts.get(species).get(preservative);
+                speciesCounts.get(species).set(preservative, count + 1);
+            }
+        }
+    });
+
+    let ethanolCounts = [];
+    let frozenCounts = [];
+    let index = 0;
+    speciesCounts.entries().forEach((species, counts) => {
+        ethanolCounts[index] = [counts['ethanol']];
+        frozenColumn[index] = [counts['frozen']];
+    });
+    sheet.getRange(`${ethanolColumn}1:${ethanolColumn}${speciesCounts.length}`).setValues(ethanolCounts);
+    sheet.getRange(`${frozenColumn}1:${frozenColumn}${speciesCounts.length}`).setValues(frozenCounts);
+
+    return speciesCounts;
+}
+
+
 function updateCounts({
                           targetSheet,
                           genusColumn,
