@@ -84,6 +84,22 @@ function load() {
         return search({resourceIds, searchTerm, filters, size: 0, after: undefined, version}).total;
     }
 
+* @param filters object containing filters according to the multisearch API's query schema (default: undefined)
+    * @param size the maximum number of records to return from the search (default: 100)
+* @param after used for pagination, if provided the search will begin after this value (after: undefined)
+* @param version the version to search at in milliseconds since the UNIX epoch (default: now at time of the searching)
+
+    /**
+     * Generator function which searches the Portal and yields all of the records it finds. The records are retrieved
+     * using the after parameter in chunks and are seamlessly yielded to the caller.
+     *
+     * @param resourceIds a list of resource IDs to search (default: [SPECIMENS])
+     * @param searchTerm free text search term matched across all fields (default: undefined)
+     * @param filters object containing filters according to the multisearch API's query schema (default: undefined)
+     * @param chunkSize the number of records to retrieve from the API at a time (default: 500)
+     * @param version the version to search at in milliseconds since the UNIX epoch (default: now at time of the searching)
+     * @returns {Generator<*, void, *>} individual records as objects
+     */
     function* searchAll({
                             resourceIds = [SPECIMENS],
                             searchTerm = undefined,
@@ -101,17 +117,20 @@ function load() {
                 after: after,
                 version: version
             });
-            // after is null when there's no more data
+            // after is null when there's no more data, so we break
             if (!result.after) {
                 break;
             }
+            // yield all the records
             yield* result.records;
+            // update the after value
             after = result.after;
         }
     }
 
     /**
      * Convenience function which creates a string_equals block for inclusion in searches/counts filter blocks.
+     *
      * @param field the field to search over
      * @param value the value to match to the field's value
      * @returns {{string_equals: {fields: *[], value}}}
@@ -128,6 +147,7 @@ function load() {
 
     /**
      * Convenience function which creates a string_contains block for inclusion in searches/counts filter blocks.
+     *
      * @param field the field to search over
      * @param value the value to match to the field's value
      * @returns {{string_contains: {fields: *[], value}}}
