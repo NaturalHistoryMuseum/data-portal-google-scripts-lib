@@ -85,22 +85,24 @@ function load() {
     }
 
     function* searchAll({
-                        resourceIds = [SPECIMENS],
-                        searchTerm = undefined,
-                        filters = undefined,
-                        chunkSize = 1000,
-                        version = Date.now()
-                    }) {
+                            resourceIds = [PortalLib.SPECIMENS],
+                            searchTerm = undefined,
+                            filters = undefined,
+                            chunkSize = 500,
+                            version = Date.now()
+                        }) {
         let after = undefined;
         while (true) {
             const result = search({
-                resourceIds,
-                searchTerm,
-                filters,
-                chunkSize,
-                after,
-                version});
-            if (!result.records) {
+                resourceIds: resourceIds,
+                searchTerm: searchTerm,
+                filters: filters,
+                size: chunkSize,
+                after: after,
+                version: version
+            });
+            // after is null when there's no more data
+            if (!result.after) {
                 break;
             }
             yield* result.records;
@@ -142,6 +144,7 @@ function load() {
 
     return {
         'search': search,
+        'searchAll': searchAll,
         'count': count,
         'stringEquals': stringEquals,
         'stringContains': stringContains,
