@@ -84,11 +84,6 @@ function load() {
         return search({resourceIds, searchTerm, filters, size: 0, after: undefined, version}).total;
     }
 
-* @param filters object containing filters according to the multisearch API's query schema (default: undefined)
-    * @param size the maximum number of records to return from the search (default: 100)
-* @param after used for pagination, if provided the search will begin after this value (after: undefined)
-* @param version the version to search at in milliseconds since the UNIX epoch (default: now at time of the searching)
-
     /**
      * Generator function which searches the Portal and yields all of the records it finds. The records are retrieved
      * using the after parameter in chunks and are seamlessly yielded to the caller.
