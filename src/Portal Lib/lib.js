@@ -112,14 +112,16 @@ function load() {
                 after: after,
                 version: version
             });
-            // after is null when there's no more data, so we break
-            if (!result.after) {
-                break;
-            }
             // yield all the records
             yield* result.records;
-            // update the after value
-            after = result.after;
+
+            if (!result.after) {
+                // if after is null then there's no more data, so we break
+                break;
+            } else {
+                // otherwise update the after value
+                after = result.after;
+            }
         }
     }
 
