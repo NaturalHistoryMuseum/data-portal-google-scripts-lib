@@ -1,4 +1,7 @@
 # Data Portal Google Scripts Library
+[![Actions](https://img.shields.io/github/workflow/status/NaturalHistoryMuseum/data-portal-google-scripts-lib/Tests?style=flat-square)](https://github.com/NaturalHistoryMuseum/data-portal-google-scripts-lib/actions)
+[![Coveralls](https://img.shields.io/coveralls/github/NaturalHistoryMuseum/data-portal-google-scripts-lib/main.svg?style=flat-square)](https://coveralls.io/github/NaturalHistoryMuseum/data-portal-google-scripts-lib)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat-square)](https://www.gnu.org/licenses/gpl-3.0)
 
 This repository contains a Google Scripts library based around accessing the Data Portal API.
 
