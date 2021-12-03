@@ -160,12 +160,28 @@ function load() {
         }
     }
 
+    // TODO: support geo exists
+    /**
+     * Convenience function which creates an exists block for inclusion in searches/counts filter blocks.
+     *
+     * @param fields one or more field names. If multiple fields are provided they are matched using an or.
+     * @returns {Object}
+     */
+    function exists(...fields) {
+        return {
+            exists: {
+                fields: fields
+            }
+        }
+    }
+
     return {
         'search': search,
         'searchAll': searchAll,
         'count': count,
         'stringEquals': stringEquals,
         'stringContains': stringContains,
+        'exists': exists,
         'SearchError': SearchError,
         'SPECIMENS': SPECIMENS,
         'INDEX_LOTS': INDEX_LOTS,
